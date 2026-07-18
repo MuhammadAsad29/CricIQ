@@ -39,11 +39,11 @@ CricIQ is trained on ball-by-ball data from three major T20 datasets:
 
 The model processes each match as a **time-series sequence of 120 balls** and simultaneously predicts:
 
-| Output Head | Task | Type |
-|---|---|---|
-| **Win Probability** | Will the batting team win? | Binary Classification |
-| **Final Score** | What will the innings total be? | Regression |
-| **Next Ball** | Dot / Boundary / Wicket on the next delivery? | 3-class Classification |
+| Output Head               | Task                                          | Type                   |
+| ------------------------- | --------------------------------------------- | ---------------------- |
+| **Win Probability** | Will the batting team win?                    | Binary Classification  |
+| **Final Score**     | What will the innings total be?               | Regression             |
+| **Next Ball**       | Dot / Boundary / Wicket on the next delivery? | 3-class Classification |
 
 ---
 
@@ -80,27 +80,27 @@ Fill in the current match situation and click **Predict** to get:
 
 Data sourced from [Cricsheet](https://cricsheet.org/) in JSON format:
 
-| File | Description | Matches |
-|---|---|---|
-| `icc_mens_t20_world_cup_json.zip` | ICC T20 World Cup matches | ~500+ |
-| `psl_json.zip` | Pakistan Super League matches | ~700+ |
-| `t20s_male_json.zip` | All international male T20s | ~2500+ |
+| File                                | Description                   | Matches |
+| ----------------------------------- | ----------------------------- | ------- |
+| `icc_mens_t20_world_cup_json.zip` | ICC T20 World Cup matches     | ~500+   |
+| `psl_json.zip`                    | Pakistan Super League matches | ~700+   |
+| `t20s_male_json.zip`              | All international male T20s   | ~2500+  |
 
 > **Total:** 3,723 matches → 825,793 ball-by-ball rows → 7,205 innings sequences
 
 ### Features per Ball (9 total)
 
-| Feature | Description |
-|---|---|
-| `ball_number` | Ball index within the innings (0–119), normalized |
-| `runs_so_far` | Cumulative runs scored, normalized |
-| `wickets_so_far` | Wickets fallen so far, normalized |
-| `balls_remaining` | Balls left in the innings, normalized |
-| `run_rate` | Current run rate (runs/ball), clipped & normalized |
-| `target_score` | 1st innings total (2nd innings only), normalized |
-| `runs_needed` | Runs required to win (2nd innings only), normalized |
-| `req_run_rate` | Required run rate (2nd innings only), normalized |
-| `inning` | 0 = 1st innings, 1 = 2nd innings |
+| Feature             | Description                                         |
+| ------------------- | --------------------------------------------------- |
+| `ball_number`     | Ball index within the innings (0–119), normalized  |
+| `runs_so_far`     | Cumulative runs scored, normalized                  |
+| `wickets_so_far`  | Wickets fallen so far, normalized                   |
+| `balls_remaining` | Balls left in the innings, normalized               |
+| `run_rate`        | Current run rate (runs/ball), clipped & normalized  |
+| `target_score`    | 1st innings total (2nd innings only), normalized    |
+| `runs_needed`     | Runs required to win (2nd innings only), normalized |
+| `req_run_rate`    | Required run rate (2nd innings only), normalized    |
+| `inning`          | 0 = 1st innings, 1 = 2nd innings                    |
 
 ---
 
@@ -131,11 +131,11 @@ CricketIQ_LSTM
 
 ### Loss Functions
 
-| Head | Loss | Weight |
-|---|---|---|
-| Win probability | `BCEWithLogitsLoss` | 1.0 |
-| Final score | `MSELoss` | 0.5 |
-| Next ball | `CrossEntropyLoss` | 0.5 |
+| Head            | Loss                  | Weight |
+| --------------- | --------------------- | ------ |
+| Win probability | `BCEWithLogitsLoss` | 1.0    |
+| Final score     | `MSELoss`           | 0.5    |
+| Next ball       | `CrossEntropyLoss`  | 0.5    |
 
 **Optimizer:** Adam (lr=1e-3) with `ReduceLROnPlateau` scheduler
 
@@ -151,8 +151,7 @@ CricIQ/
 ├── icc_mens_t20_world_cup_json.zip    # ICC T20 World Cup dataset
 ├── psl_json.zip                       # PSL dataset
 ├── t20s_male_json.zip                 # International T20 dataset
-├── all_matches/                       # Extracted JSON files (auto-generated)
-└── CricketIQ_Project_Report.docx      # Full project report
+└──	all_matches/                       # Extracted JSON files (auto-generated)
 ```
 
 ---
@@ -195,14 +194,14 @@ pip install gradio
 
 Open `CricIQ.ipynb` in Jupyter or VS Code and run all cells in order:
 
-| Cell | Description |
-|---|---|
-| **Cell 1** | Unzip datasets & parse 825K ball-by-ball rows |
-| **Cell 2** | Feature engineering & sequence creation |
-| **Cell 3** | Define LSTM model architecture |
-| **Cell 4** | Train/Val/Test split & training loop (20 epochs) |
+| Cell             | Description                                       |
+| ---------------- | ------------------------------------------------- |
+| **Cell 1** | Unzip datasets & parse 825K ball-by-ball rows     |
+| **Cell 2** | Feature engineering & sequence creation           |
+| **Cell 3** | Define LSTM model architecture                    |
+| **Cell 4** | Train/Val/Test split & training loop (20 epochs)  |
 | **Cell 5** | Manual inference — type a match scenario in code |
-| **Cell 6** | Launch the Gradio interactive web UI |
+| **Cell 6** | Launch the Gradio interactive web UI              |
 
 ### Option B — Skip training, use pre-trained model
 
@@ -229,10 +228,10 @@ Did Batting Team Win Toss? : Yes ●
 
 ### Training Summary (20 Epochs)
 
-| Split | Size | Win Accuracy |
-|---|---|---|
-| Train | 5,403 innings | ~82.6% |
-| Validation | 1,081 innings | ~83.2% |
+| Split          | Size                  | Win Accuracy    |
+| -------------- | --------------------- | --------------- |
+| Train          | 5,403 innings         | ~82.6%          |
+| Validation     | 1,081 innings         | ~83.2%          |
 | **Test** | **721 innings** | **84.2%** |
 
 ### Best Model
@@ -243,11 +242,11 @@ Did Batting Team Win Toss? : Yes ●
 
 ### Next-Ball Class Distribution
 
-| Class | Label | Count |
-|---|---|---|
-| 0 | Dot / Other | 709,189 |
-| 1 | Boundary (4 or 6) | 111,683 |
-| 2 | Wicket | 43,728 |
+| Class | Label             | Count   |
+| ----- | ----------------- | ------- |
+| 0     | Dot / Other       | 709,189 |
+| 1     | Boundary (4 or 6) | 111,683 |
+| 2     | Wicket            | 43,728  |
 
 ---
 
@@ -280,14 +279,14 @@ At inference, you provide the **current match state** (runs, wickets, balls bowl
 
 ## 🛠️ Tech Stack
 
-| Library | Version | Purpose |
-|---|---|---|
-| Python | 3.10+ | Core language |
-| PyTorch | 2.12.0 | LSTM model & training |
-| NumPy | 2.4.6 | Numerical operations |
-| Pandas | 3.0.3 | Data manipulation |
-| Gradio | latest | Interactive web UI |
-| scikit-learn | — | Train/val/test split |
+| Library      | Version | Purpose               |
+| ------------ | ------- | --------------------- |
+| Python       | 3.10+   | Core language         |
+| PyTorch      | 2.12.0  | LSTM model & training |
+| NumPy        | 2.4.6   | Numerical operations  |
+| Pandas       | 3.0.3   | Data manipulation     |
+| Gradio       | latest  | Interactive web UI    |
+| scikit-learn | —      | Train/val/test split  |
 
 ---
 
