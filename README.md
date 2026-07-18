@@ -150,8 +150,7 @@ CricIQ/
 ├── requirements.txt                   # Python dependencies
 ├── icc_mens_t20_world_cup_json.zip    # ICC T20 World Cup dataset
 ├── psl_json.zip                       # PSL dataset
-├── t20s_male_json.zip                 # International T20 dataset
-└──	all_matches/                       # Extracted JSON files (auto-generated)
+└── t20s_male_json.zip                 # International T20 dataset
 ```
 
 ---
